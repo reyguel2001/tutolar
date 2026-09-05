@@ -1,0 +1,101 @@
+# ------------------------------------------------------------
+# TUTOLAR · stack de desarrollo
+#
+#   docker compose up -d --build
+#
+# No hace falta preparar ningun .env: el contenedor lo crea a partir de
+# .env.example y las variables DB_* de aqui abajo mandan sobre el archivo,
+# asi que el MISMO .env sirve para XAMPP y para Docker.
+#
+#   Web ............ http://localhost:8080
+#   phpMyAdmin ..... http://localhost:8081
+#   MariaDB ........ localhost:3307   (usuario tutolar / tutolar)
+#
+# Los puertos estan elegidos para NO chocar con XAMPP, que ocupa
+# el 80, el 443 y el 3306. Puedes tener los dos a la vez.
+# ------------------------------------------------------------
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    image: tutolar/php:8.3-fpm
+    container_name: tutolar-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      # vendor/ NO se aisla en un volumen: asi la misma instalacion de
+      # dependencias sirve para Docker y para XAMPP.
+      - .:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: tutolar
+      DB_USERNAME: tutolar
+      DB_PASSWORD: tutolar
+      DB_CONNECTION: mariadb
+      APP_URL: http://localhost:8080
+      TUTOLAR_SEED: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [tutolar]
+
+  web:
+    image: nginx:1.27-alpine
+    container_name: tutolar-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on: [app]
+    networks: [tutolar]
+
+  db:
+    image: mariadb:11.4
+    container_name: tutolar-db
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MARIADB_DATABASE: tutolar
+      MARIADB_USER: tutolar
+      MARIADB_PASSWORD: tutolar
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/10-tutolar.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    networks: [tutolar]
+
+  pma:
+    image: phpmyadmin:5
+    container_name: tutolar-pma
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 64M
+    depends_on: [db]
+    networks: [tutolar]
+
+volumes:
+  dbdata:
+
+networks:
+  tutolar:
+    driver: bridge

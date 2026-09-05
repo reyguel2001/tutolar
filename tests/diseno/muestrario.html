@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muestrario del sistema de diseño · TUTOLAR</title>
+<!--
+    Todas las piezas del sistema, en una sola página y en los dos temas.
+
+    No es una pantalla de la aplicación: es la referencia contra la que se mira
+    un cambio de CSS antes de darlo por bueno. Se abre directamente en el
+    navegador, sin Laravel, porque solo depende de tutolar.css.
+-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../public/css/tutolar.css" rel="stylesheet">
+<style>
+  .muestra { padding: 1.5rem 2rem 3rem; }
+  .muestra h2 { font-size: .72rem; text-transform: uppercase; letter-spacing: 1px;
+                color: var(--tl-text-3); font-weight: 800; margin: 2rem 0 .8rem; }
+  .fila { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+  .swatch { width: 88px; }
+  .swatch .c { height: 46px; border-radius: 8px; border: 1px solid var(--tl-border); }
+  .swatch .n { font-size: .66rem; color: var(--tl-text-3); margin-top: .25rem;
+               font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<div class="tl-app">
+  <aside class="tl-side">
+   <div class="interior">
+    <div class="tl-brand">
+      <div class="tl-mark">T</div>
+      <div><div class="nm">TUTOLAR</div><div class="rl">Dirección</div></div>
+    </div>
+    <div class="tl-org">
+      <div class="oi">🏫</div>
+      <div class="flex-grow-1"><b>IES Cervantes</b><small>Curso 2026/2027</small></div>
+    </div>
+    <nav class="px-3">
+      <a class="tl-nav on" href="#"><span class="ic">📈</span> Panel</a>
+      <div class="tl-navlbl">Gestión</div>
+      <a class="tl-nav" href="#"><span class="ic">🎒</span> Alumnos</a>
+      <a class="tl-nav" href="#"><span class="ic">📨</span> Solicitudes
+         <span class="tl-chip tl-medio ms-auto">3</span></a>
+      <a class="tl-nav" href="#"><span class="ic">📚</span> Asignaturas</a>
+      <a class="tl-nav tl-nav-sub" href="#"><span class="ic">📊</span> Gráficos</a>
+    </nav>
+    <div class="foot">
+      <div class="d-flex align-items-center gap-2">
+        <span class="tl-avatar" style="background:#2F5AC8;width:32px;height:32px">MV</span>
+        <span class="flex-grow-1">
+          <b class="d-block" style="font-size:.8rem;color:#fff">Marta Vega</b>
+          <small style="font-size:.7rem;color:var(--tl-sidebar-text-2)">Familia</small>
+        </span>
+        <button class="btn btn-sm tl-salir">Salir</button>
+      </div>
+    </div>
+   </div>
+  </aside>
+
+  <div>
+    <header class="tl-top">
+      <div class="tl-crumb"><span>Diseño</span> › <b>Muestrario</b></div>
+      <div class="ms-auto"><button class="btn btn-sm btn-outline-secondary" onclick="tema()">◐</button></div>
+    </header>
+
+    <main class="muestra">
+      <div class="tl-cab">
+        <div>
+          <h1>Muestrario del sistema</h1>
+          <p>Cada pieza que define tutolar.css, para comprobarla de un vistazo en los dos temas.</p>
+        </div>
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-secondary" href="#">Secundaria</a>
+          <a class="btn btn-primary" href="#">Acción principal</a>
+        </div>
+      </div>
+
+      <h2>Paleta</h2>
+      <div class="fila">
+        <div class="swatch"><div class="c" style="background:#9FE7F5"></div><div class="n">9FE7F5</div></div>
+        <div class="swatch"><div class="c" style="background:#429EBD"></div><div class="n">429EBD</div></div>
+        <div class="swatch"><div class="c" style="background:#053F5C"></div><div class="n">053F5C</div></div>
+        <div class="swatch"><div class="c" style="background:#F7AD19"></div><div class="n">F7AD19</div></div>
+      </div>
+
+      <h2>Niveles de rendimiento · segmentos + palabra + color</h2>
+      <div class="fila">
+        <span class="tl-chip tl-bajo"><span class="tl-segs"><i class="on"></i><i></i><i></i></span> BAJO</span>
+        <span class="tl-chip tl-medio"><span class="tl-segs"><i class="on"></i><i class="on"></i><i></i></span> MEDIO</span>
+        <span class="tl-chip tl-alto"><span class="tl-segs"><i class="on"></i><i class="on"></i><i class="on"></i></span> ALTO</span>
+        <span class="tl-chip tl-sin"><span class="tl-segs"><i></i><i></i><i></i></span> SIN DATOS</span>
+        <span class="tl-chip tl-info">INFORMATIVO</span>
+      </div>
+
+      <h2>Cifras y barras</h2>
+      <div class="fila mb-2">
+        <span class="tl-cifra tl-bajo fs-4">38</span>
+        <span class="tl-cifra tl-medio fs-4">61</span>
+        <span class="tl-cifra tl-alto fs-4">84</span>
+        <span class="tl-cifra tl-sin fs-4">—</span>
+      </div>
+      <div class="tl-meter mb-2" style="max-width:420px"><i class="tl-fill-bajo" style="width:38%"></i></div>
+      <div class="tl-meter mb-2" style="max-width:420px"><i class="tl-fill-medio" style="width:61%"></i></div>
+      <div class="tl-meter mb-2" style="max-width:420px"><i class="tl-fill-alto" style="width:84%"></i></div>
+      <div class="tl-stack" style="max-width:420px;height:16px">
+        <i class="tl-fill-bajo" style="flex:3"></i><i class="tl-fill-medio" style="flex:7"></i>
+        <i class="tl-fill-alto" style="flex:12"></i><i class="tl-fill-sin" style="flex:4"></i>
+      </div>
+
+      <h2>Dial</h2>
+      <div class="fila">
+        <div class="tl-dial" style="width:170px;height:170px">
+          <svg width="170" height="170" viewBox="0 0 170 170">
+            <circle cx="85" cy="85" r="71" fill="none" stroke="var(--tl-surface-3)" stroke-width="13"/>
+            <circle cx="85" cy="85" r="71" fill="none" stroke="var(--tl-alto-fill)" stroke-width="13"
+                    stroke-linecap="round" stroke-dasharray="446.1" stroke-dashoffset="80.3"/>
+          </svg>
+          <div class="in">
+            <div class="v" style="font-size:2.4rem">82<span>%</span></div>
+            <div class="l" style="color:var(--tl-alto)">
+              <span class="tl-segs g"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+              Rendimiento alto</div>
+          </div>
+        </div>
+        <div class="tl-dial" style="width:170px;height:170px">
+          <svg width="170" height="170" viewBox="0 0 170 170">
+            <circle cx="85" cy="85" r="71" fill="none" stroke="var(--tl-surface-3)" stroke-width="13"/>
+            <circle cx="85" cy="85" r="71" fill="none" stroke="var(--tl-sin-fill)" stroke-width="13"
+                    stroke-linecap="round" stroke-dasharray="446.1" stroke-dashoffset="446.1"/>
+          </svg>
+          <div class="in">
+            <div class="v" style="font-size:2.4rem">—</div>
+            <div class="l" style="color:var(--tl-sin)">
+              <span class="tl-segs g"><i></i><i></i><i></i></span>
+              Datos insuficientes</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Avatares</h2>
+      <div class="fila">
+        <span class="tl-avatar" style="background:#2F5AC8;width:44px;height:44px">MV</span>
+        <span class="tl-avatar" style="background:#7A3BC4;width:44px;height:44px">JO</span>
+        <span class="tl-avatar" style="background:#C01A6E;width:44px;height:44px">LR</span>
+        <span class="tl-avatar" style="background:#1E7E92;width:44px;height:44px">AS</span>
+        <span class="tl-avatar" style="background:#5F5F7F;width:44px;height:44px">PG</span>
+      </div>
+
+      <h2>Series del gráfico</h2>
+      <div class="tl-leyenda mb-2">
+        <span><i style="background:var(--tl-serie-examen)"></i>Exámenes</span>
+        <span><i style="background:var(--tl-serie-tarea)"></i>Ejercicios y tareas</span>
+      </div>
+      <div class="row g-3" style="max-width:640px">
+        <div class="col-6"><div class="tl-tile">
+          <div class="tl-tile-lbl"><i style="background:var(--tl-serie-examen)"></i>Media en exámenes</div>
+          <div class="tl-tile-val">72,4<span>/100</span></div>
+          <div class="tl-tile-sub">12 notas registradas</div>
+        </div></div>
+        <div class="col-6"><div class="tl-tile">
+          <div class="tl-tile-lbl"><i style="background:var(--tl-serie-tarea)"></i>Media en ejercicios</div>
+          <div class="tl-tile-val">58,1<span>/100</span></div>
+          <div class="tl-tile-sub">9 notas registradas</div>
+        </div></div>
+      </div>
+
+      <h2>Avisos</h2>
+      <div class="tl-banner tl-bajo mb-2"><span>⚠️</span><div>Aviso de error o de riesgo.</div></div>
+      <div class="tl-banner tl-medio mb-2"><span>⚠️</span><div>Advertencia que pide atención.</div></div>
+      <div class="tl-banner tl-alto mb-2"><span>✅</span><div>Confirmación de algo que ha salido bien.</div></div>
+      <div class="tl-banner tl-info mb-2"><span>ℹ️</span><div>Información con un <a href="#">enlace dentro</a>.</div></div>
+      <div class="tl-banner tl-sin mb-2"><span>🔒</span><div>Nota neutra, del sistema.</div></div>
+
+      <details class="tl-ayuda mb-3" open>
+        <summary>Cómo funciona esta pantalla</summary>
+        <div class="cuerpo">
+          <p><b>Ayuda plegada:</b> sustituye a las pilas de avisos permanentes que había encima de las tablas.</p>
+        </div>
+      </details>
+
+      <h2>Formularios</h2>
+      <div class="row g-3" style="max-width:640px">
+        <div class="col-md-6">
+          <label class="form-label" for="a">Campo normal</label>
+          <input class="form-control" id="a" placeholder="Escribe algo">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="b">Código de vinculación</label>
+          <input class="form-control tl-codigo" id="b" value="KQ7D-2XB9">
+        </div>
+        <div class="col-12"><div class="tl-sep">Separador de sección</div></div>
+        <div class="col-12 fila">
+          <button class="btn btn-primary">Principal</button>
+          <button class="btn btn-secondary">Secundaria</button>
+          <button class="btn btn-outline-secondary">Fantasma</button>
+          <button class="btn btn-sm tl-peligro">Confirmando baja</button>
+          <span class="tl-codigo-chip">KQ7D-2XB9</span>
+        </div>
+      </div>
+
+      <h2>Tabla</h2>
+      <div class="card">
+        <div class="card-header">Alumnos</div>
+        <table class="tl-table">
+          <thead><tr><th>Alumno</th><th>Grupo</th><th class="num">Índice</th><th style="width:210px">Estado</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#">Lucía Ramos Ortega</a></td><td class="text-body-secondary">3º ESO A</td>
+                <td class="num tl-cifra tl-alto">84</td>
+                <td><div class="d-flex align-items-center gap-3">
+                  <div class="tl-meter flex-grow-1"><i class="tl-fill-alto" style="width:84%"></i></div>
+                  <span class="tl-chip tl-alto"><span class="tl-segs"><i class="on"></i><i class="on"></i><i class="on"></i></span> ALTO</span>
+                </div></td></tr>
+            <tr><td><a href="#">Diego Alonso Ruiz</a></td><td class="text-body-secondary">3º ESO A</td>
+                <td class="num tl-cifra tl-medio">61</td>
+                <td><div class="d-flex align-items-center gap-3">
+                  <div class="tl-meter flex-grow-1"><i class="tl-fill-medio" style="width:61%"></i></div>
+                  <span class="tl-chip tl-medio"><span class="tl-segs"><i class="on"></i><i class="on"></i><i></i></span> MEDIO</span>
+                </div></td></tr>
+            <tr><td><a href="#">Sara Beltrán Gil</a></td><td class="text-body-secondary">3º ESO B</td>
+                <td class="num tl-cifra tl-bajo">38</td>
+                <td><div class="d-flex align-items-center gap-3">
+                  <div class="tl-meter flex-grow-1"><i class="tl-fill-bajo" style="width:38%"></i></div>
+                  <span class="tl-chip tl-bajo"><span class="tl-segs"><i class="on"></i><i></i><i></i></span> BAJO</span>
+                </div></td></tr>
+            <tr><td><a href="#">Iván Puente Mora</a></td><td class="text-body-secondary">3º ESO B</td>
+                <td class="num tl-cifra tl-sin">—</td>
+                <td><div class="d-flex align-items-center gap-3">
+                  <div class="tl-meter flex-grow-1"><i class="tl-fill-sin" style="width:0%"></i></div>
+                  <span class="tl-chip tl-sin"><span class="tl-segs"><i></i><i></i><i></i></span> SIN DATOS</span>
+                </div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Indicadores y pestañas</h2>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-xl-3"><div class="card"><div class="card-body tl-kpi">
+          <div class="k">Alumnos seguidos</div><div class="v">248</div><div class="d">en 6 cursos</div>
+        </div></div></div>
+        <div class="col-6 col-xl-3"><div class="card"><div class="card-body tl-kpi">
+          <div class="k">En rendimiento bajo</div><div class="v tl-cifra tl-bajo">31</div><div class="d">13 % del alumnado</div>
+        </div></div></div>
+      </div>
+      <nav class="tl-pestanas"><a class="on" href="#">Resumen</a><a href="#">Gráficos</a></nav>
+
+      <h2>Vacío</h2>
+      <div class="card"><div class="tl-empty">
+        <div class="em">📊</div><b>Todavía no hay nada aquí</b>
+        <p class="mb-0">Cuando lo haya, aparecerá en esta tarjeta.</p>
+      </div></div>
+    </main>
+  </div>
+</div>
+<script>
+function tema() {
+  var h = document.documentElement;
+  h.setAttribute('data-bs-theme', h.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
+}
+</script>
+</body>
+</html>

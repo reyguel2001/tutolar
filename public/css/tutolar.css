@@ -1,0 +1,582 @@
+/* ============================================================
+   TUTOLAR · sistema de diseño
+   ------------------------------------------------------------
+   Bootstrap 5.3 aporta la retícula, los formularios y las utilidades.
+   Este archivo hace tres cosas:
+
+     1. Define los tokens de TUTOLAR y reescribe con ellos las variables de
+        Bootstrap, para que la web no parezca «una web de Bootstrap».
+     2. Añade los componentes propios: el nivel de rendimiento, el dial, la
+        barra lateral, las tablas de datos y el gráfico de tipos de prueba.
+     3. Fija dos reglas de color que no se saltan en ninguna vista.
+
+   ------------------------------------------------------------
+   LAS DOS REGLAS DE COLOR
+
+   · El ÁMBAR es acción, nunca estado.
+     Aparece como relleno sólido en lo que se pulsa, siempre con tinta azul
+     marino encima. Nunca es texto sobre fondo claro (1.92:1 sobre blanco) y
+     nunca describe cómo va un alumno.
+
+   · El ESTADO nunca depende solo del color.
+     Como el ámbar ocupa la franja cálida, los cuatro niveles se leen por
+     tres cosas a la vez: el número de segmentos llenos, la palabra y el
+     color. Quítale el color a la pantalla y el nivel sigue leyéndose.
+
+         BAJO      ▮▯▯      MEDIO     ▮▮▯
+         ALTO      ▮▮▮      SIN DATOS ▯▯▯
+
+   Los valores están comprobados en tests/diseno/paleta.js: contraste WCAG
+   en los dos temas y separación ΔE2000 en visión normal y en las tres
+   formas de daltonismo. Antes de tocar un color, ejecuta ese archivo.
+   ============================================================ */
+
+/* ---------- TOKENS · TEMA CLARO ---------- */
+:root,
+[data-bs-theme="light"] {
+  /* Superficies. El gris tiene una pizca de azul marino dentro para que
+     el fondo y la marca pertenezcan a la misma familia. */
+  --tl-bg:#F2F6F8;
+  --tl-surface:#FFFFFF;
+  --tl-surface-2:#E8F0F5;
+  --tl-surface-3:#D9E7EF;
+  --tl-border:#D5E2EA;
+  --tl-border-strong:#B4C9D5;
+
+  /* Tinta. El texto principal ES el azul marino de la paleta. */
+  --tl-text:#053F5C;
+  --tl-text-2:#48697C;
+  --tl-text-3:#7B95A3;
+  --tl-text-inv:#FFFFFF;
+
+  /* Acción: ámbar de relleno + tinta marino. Ver la regla de arriba. */
+  --tl-accion:#F7AD19;
+  --tl-accion-press:#DE9A0C;
+  --tl-accion-tinta:#053F5C;
+  --tl-accion-soft:#FEF3DC;
+  --tl-accion-line:#F3D89B;
+
+  /* Enlaces y texto pulsable: cian profundo, que sí pasa AA como texto. */
+  --tl-enlace:#0A6E8F;
+  --tl-enlace-press:#08596F;
+  --tl-enlace-soft:#E3F1F7;
+  --tl-enlace-line:#B6DCEA;
+
+  /* Marca: los tres azules de la paleta. */
+  --tl-marino:#053F5C;
+  --tl-azul:#429EBD;
+  --tl-cian:#9FE7F5;
+
+  /* Niveles de rendimiento. */
+  --tl-alto:#0E7C5A;   --tl-alto-soft:#E3F3EC;   --tl-alto-line:#AEDCC8;
+  --tl-medio:#B25A00;  --tl-medio-soft:#FBEEDF;  --tl-medio-line:#EDCFA6;
+  --tl-bajo:#8E1E17;   --tl-bajo-soft:#FAE9E7;   --tl-bajo-line:#E9C0BC;
+  --tl-sin:#5E7684;    --tl-sin-soft:#ECF1F4;    --tl-sin-line:#CFDCE3;
+
+  /* Relleno de barras y arcos: los mismos tonos, sin aclarar. */
+  --tl-alto-fill:#0E7C5A;
+  --tl-medio-fill:#B25A00;
+  --tl-bajo-fill:#8E1E17;
+  --tl-sin-fill:#9FB2BC;
+
+  /* Series del gráfico de exámenes frente a ejercicios. NO son colores de
+     estado: identifican el tipo de prueba y se toman de la propia paleta. */
+  --tl-serie-examen:#053F5C;
+  --tl-serie-tarea:#429EBD;
+
+  --tl-sidebar:#053F5C;
+  --tl-sidebar-text:#BFE0EC;
+  --tl-sidebar-text-2:#7FB2C8;
+  --tl-sidebar-hover:rgba(159,231,245,.12);
+  --tl-sidebar-line:rgba(159,231,245,.16);
+
+  --tl-sombra-1:0 1px 2px rgba(5,63,92,.07);
+  --tl-sombra-2:0 6px 18px rgba(5,63,92,.10);
+  --tl-radio:.75rem;
+}
+
+/* ---------- TOKENS · TEMA OSCURO ---------- */
+[data-bs-theme="dark"] {
+  --tl-bg:#071620;
+  --tl-surface:#0C2434;
+  --tl-surface-2:#12374C;
+  --tl-surface-3:#194459;
+  --tl-border:#17394D;
+  --tl-border-strong:#2B5A73;
+
+  --tl-text:#E4F1F7;
+  --tl-text-2:#9FBECD;
+  --tl-text-3:#6E8D9E;
+  --tl-text-inv:#071620;
+
+  --tl-accion:#F7AD19;
+  --tl-accion-press:#FFC14D;
+  --tl-accion-tinta:#071620;
+  --tl-accion-soft:rgba(247,173,25,.14);
+  --tl-accion-line:rgba(247,173,25,.34);
+
+  --tl-enlace:#6FC7E3;
+  --tl-enlace-press:#9FE7F5;
+  --tl-enlace-soft:rgba(111,199,227,.14);
+  --tl-enlace-line:rgba(111,199,227,.32);
+
+  --tl-marino:#9FE7F5;
+  --tl-azul:#5FB6D4;
+  --tl-cian:#9FE7F5;
+
+  /* Pasos propios del tema oscuro, no un volteo de los claros. */
+  --tl-alto:#3FC594;   --tl-alto-soft:rgba(63,197,148,.14);  --tl-alto-line:rgba(63,197,148,.32);
+  --tl-medio:#D27014;  --tl-medio-soft:rgba(210,112,20,.18); --tl-medio-line:rgba(210,112,20,.40);
+  --tl-bajo:#F1706C;   --tl-bajo-soft:rgba(241,112,108,.14); --tl-bajo-line:rgba(241,112,108,.32);
+  --tl-sin:#9AA4A8;    --tl-sin-soft:rgba(154,164,168,.14);  --tl-sin-line:rgba(154,164,168,.30);
+
+  --tl-alto-fill:#3FC594;
+  --tl-medio-fill:#D27014;
+  --tl-bajo-fill:#F1706C;
+  --tl-sin-fill:#6E8D9E;
+
+  --tl-serie-examen:#9FE7F5;
+  --tl-serie-tarea:#45A6E8;
+
+  --tl-sidebar:#041A26;
+  --tl-sidebar-text:#BFE0EC;
+  --tl-sidebar-text-2:#7FB2C8;
+  --tl-sidebar-hover:rgba(159,231,245,.10);
+  --tl-sidebar-line:rgba(159,231,245,.14);
+
+  --tl-sombra-1:0 1px 2px rgba(0,0,0,.45);
+  --tl-sombra-2:0 6px 20px rgba(0,0,0,.5);
+}
+
+/* ---------- PUENTE HACIA BOOTSTRAP ---------- */
+:root,
+[data-bs-theme="light"],
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--tl-bg);
+  --bs-body-color: var(--tl-text);
+  --bs-secondary-color: var(--tl-text-2);
+  --bs-tertiary-color: var(--tl-text-3);
+  --bs-border-color: var(--tl-border);
+  --bs-link-color: var(--tl-enlace);
+  --bs-link-hover-color: var(--tl-enlace-press);
+  --bs-body-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --bs-body-font-size: .95rem;
+  --bs-body-line-height: 1.55;
+  --bs-border-radius: var(--tl-radio);
+  --bs-border-radius-lg: 1rem;
+}
+
+body { background: var(--tl-bg); color: var(--tl-text); }
+
+h1, h2, h3, h4, .fw-bold { letter-spacing: -.02em; }
+
+/* ============================================================
+   CONTROLES
+   ============================================================ */
+
+.btn { --bs-btn-border-radius:.625rem; font-weight:650; min-height:42px; }
+
+/* Acción principal: ámbar con tinta marino. Nunca lleva texto blanco. */
+.btn-primary {
+  --bs-btn-bg: var(--tl-accion);        --bs-btn-border-color: var(--tl-accion);
+  --bs-btn-hover-bg: var(--tl-accion-press); --bs-btn-hover-border-color: var(--tl-accion-press);
+  --bs-btn-active-bg: var(--tl-accion-press);
+  --bs-btn-color: var(--tl-accion-tinta);
+  --bs-btn-hover-color: var(--tl-accion-tinta);
+  --bs-btn-active-color: var(--tl-accion-tinta);
+  --bs-btn-disabled-bg: var(--tl-surface-3);
+  --bs-btn-disabled-border-color: var(--tl-border);
+  --bs-btn-disabled-color: var(--tl-text-3);
+}
+
+/* Acción secundaria: marino sólido. Para el «guardar» de las zonas del
+   centro, donde el ámbar se reserva a la acción principal de la pantalla. */
+.btn-secondary {
+  --bs-btn-bg: var(--tl-marino);  --bs-btn-border-color: var(--tl-marino);
+  --bs-btn-hover-bg: #0A5273;     --bs-btn-hover-border-color: #0A5273;
+  --bs-btn-color:#fff;            --bs-btn-hover-color:#fff;
+}
+[data-bs-theme="dark"] .btn-secondary {
+  --bs-btn-bg: var(--tl-azul); --bs-btn-border-color: var(--tl-azul);
+  --bs-btn-hover-bg:#7CC8E0;   --bs-btn-hover-border-color:#7CC8E0;
+  --bs-btn-color: var(--tl-text-inv); --bs-btn-hover-color: var(--tl-text-inv);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--tl-text);
+  --bs-btn-border-color: var(--tl-border-strong);
+  --bs-btn-bg: transparent;
+  --bs-btn-hover-bg: var(--tl-surface-2);
+  --bs-btn-hover-color: var(--tl-text);
+  --bs-btn-hover-border-color: var(--tl-enlace);
+}
+
+/* Botón de baja esperando la segunda pulsación. */
+.tl-peligro {
+  background: var(--tl-bajo) !important;
+  border-color: var(--tl-bajo) !important;
+  color: #fff !important;
+}
+[data-bs-theme="dark"] .tl-peligro { color: var(--tl-text-inv) !important; }
+
+.form-control, .form-select {
+  background: var(--tl-surface); border-color: var(--tl-border-strong);
+  color: var(--tl-text); min-height: 44px; border-radius: .625rem;
+}
+.form-control:focus, .form-select:focus {
+  background: var(--tl-surface); color: var(--tl-text);
+  border-color: var(--tl-enlace); box-shadow: 0 0 0 3px var(--tl-enlace-soft);
+}
+.form-control::placeholder { color: var(--tl-text-3); }
+.form-label { font-size: .82rem; font-weight: 650; color: var(--tl-text-2); margin-bottom: .3rem; }
+
+/* Foco visible: en web es obligatorio y no se suprime nunca. Va en ámbar
+   porque es la señal de «esto responde a lo que hagas ahora». */
+:focus-visible {
+  outline: 3px solid var(--tl-accion);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.tl-skip {
+  position: absolute; left: -9999px; top: 12px; z-index: 2000;
+  background: var(--tl-accion); color: var(--tl-accion-tinta);
+  padding: 10px 16px; border-radius: 10px; font-weight: 700;
+}
+.tl-skip:focus { left: 16px; }
+
+.card {
+  --bs-card-bg: var(--tl-surface);
+  --bs-card-border-color: var(--tl-border);
+  --bs-card-border-radius: .875rem;
+  box-shadow: var(--tl-sombra-1);
+}
+.card-header {
+  background: transparent; border-bottom-color: var(--tl-border);
+  padding: 1rem 1.125rem; font-weight: 700;
+}
+
+/* Bootstrap pone display:flex en .card y gana al display:none del atributo
+   hidden. Sin esto, los bloques ocultos de los formularios se verían igual. */
+[hidden] { display: none !important; }
+
+/* ============================================================
+   ESTRUCTURA
+   ============================================================ */
+.tl-app { display: grid; grid-template-columns: 256px 1fr; min-height: 100vh; }
+@media (max-width: 991.98px) { .tl-app { grid-template-columns: 1fr; } .tl-side { display: none; } }
+
+/* Barra lateral en azul marino: separa de un vistazo «dónde estoy» de
+   «qué estoy mirando», y es lo que da identidad a la plataforma.
+
+   El marino lo pinta la columna entera, no el bloque pegado: si lo pintara el
+   bloque, en una pantalla larga el color se cortaba a los 100vh y debajo
+   aparecía el fondo de la página. Lo que se queda pegado al hacer scroll es el
+   interior. */
+.tl-side {
+  background: var(--tl-sidebar); color: var(--tl-sidebar-text);
+}
+.tl-side .interior {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column;
+}
+.tl-brand { display: flex; align-items: center; gap: .7rem; padding: 1.35rem 1.25rem 1.15rem; }
+.tl-mark {
+  width: 36px; height: 36px; border-radius: 11px;
+  background: var(--tl-accion); color: #053F5C;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; flex-shrink: 0;
+}
+.tl-brand .nm { font-size: 1.05rem; font-weight: 800; letter-spacing: -.4px; line-height: 1.1; color: #fff; }
+.tl-brand .rl { font-size: .7rem; color: var(--tl-sidebar-text-2); }
+
+.tl-org {
+  margin: 0 .875rem 1rem; padding: .7rem .75rem; border-radius: .75rem;
+  background: var(--tl-sidebar-hover); display: flex; align-items: center; gap: .625rem;
+}
+.tl-org .oi {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: rgba(159,231,245,.16); color: var(--tl-cian);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.tl-org b { display: block; font-size: .8rem; line-height: 1.25; color: #fff; }
+.tl-org small { font-size: .7rem; color: var(--tl-sidebar-text-2); }
+
+.tl-navlbl {
+  font-size: .64rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--tl-sidebar-text-2); padding: .8rem .75rem .4rem;
+}
+.tl-nav {
+  display: flex; align-items: center; gap: .7rem; padding: .55rem .7rem;
+  border-radius: .625rem; font-size: .875rem; font-weight: 550;
+  color: var(--tl-sidebar-text); text-decoration: none; margin-bottom: 2px;
+}
+.tl-nav:hover { background: var(--tl-sidebar-hover); color: #fff; }
+/* El activo lleva ámbar, que es el color de «aquí es donde estás actuando». */
+.tl-nav.on { background: var(--tl-accion); color: #053F5C; font-weight: 700; }
+.tl-nav .ic { width: 20px; text-align: center; flex-shrink: 0; }
+.tl-nav .cnt {
+  margin-left: auto; font-size: .7rem; font-weight: 700;
+  background: rgba(159,231,245,.18); color: var(--tl-cian);
+  padding: 1px 7px; border-radius: 6px;
+}
+.tl-nav.on .cnt { background: rgba(5,63,92,.16); color: #053F5C; }
+.tl-nav-sub { padding-left: 2.1rem; font-size: .82rem; }
+
+.tl-side .foot { margin-top: auto; padding: .875rem; border-top: 1px solid var(--tl-sidebar-line); }
+.tl-side .foot a { color: var(--tl-sidebar-text); }
+/* «Salir» vive sobre el marino, así que no puede heredar los bordes y la
+   tinta del resto de botones fantasma: sobre ese fondo no se verían. */
+.tl-salir {
+  background: transparent; color: var(--tl-sidebar-text);
+  border: 1px solid var(--tl-sidebar-line); font-weight: 600;
+}
+.tl-salir:hover { background: var(--tl-sidebar-hover); color: #fff; border-color: var(--tl-cian); }
+
+.tl-top {
+  height: 62px; border-bottom: 1px solid var(--tl-border); background: var(--tl-surface);
+  display: flex; align-items: center; gap: 1rem; padding: 0 1.6rem;
+  position: sticky; top: 0; z-index: 10;
+}
+.tl-crumb { font-size: .82rem; color: var(--tl-text-3); }
+.tl-crumb b { color: var(--tl-text); font-weight: 650; }
+.tl-main { padding: 1.75rem 2rem 4rem; }
+
+/* Cabecera de página: título, frase y acciones en la misma línea. */
+.tl-cab { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; justify-content: space-between; margin-bottom: 1.4rem; }
+.tl-cab h1 { font-size: 1.5rem; font-weight: 800; margin: 0; }
+.tl-cab p { margin: .25rem 0 0; font-size: .875rem; color: var(--tl-text-2); max-width: 60ch; }
+
+/* ============================================================
+   IDENTIDAD DE LAS PERSONAS
+   ============================================================ */
+.tl-avatar {
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; flex-shrink: 0; width: 32px; height: 32px; font-size: .75rem;
+  /* La foto es rectangular y el hueco es redondo: recorta, no deforma. */
+  overflow: hidden; line-height: 0;
+}
+.tl-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tl-avatar svg { display: block; }
+
+.tl-foto { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+.tl-foto-acciones { display: flex; flex-direction: column; gap: .5rem; min-width: 240px; }
+
+/* ============================================================
+   NIVEL DE RENDIMIENTO
+   ------------------------------------------------------------
+   Tres piezas siempre juntas: segmentos, palabra y color. El color es la
+   tercera, no la primera: si se pierde, el nivel se sigue leyendo.
+   ============================================================ */
+
+.tl-chip {
+  display: inline-flex; align-items: center; gap: .38rem;
+  font-size: .66rem; font-weight: 800; letter-spacing: .4px;
+  padding: .22rem .5rem; border-radius: .45rem;
+  border: 1px solid transparent; white-space: nowrap;
+}
+.tl-chip.tl-alto  { background: var(--tl-alto-soft);  color: var(--tl-alto);  border-color: var(--tl-alto-line); }
+.tl-chip.tl-medio { background: var(--tl-medio-soft); color: var(--tl-medio); border-color: var(--tl-medio-line); }
+.tl-chip.tl-bajo  { background: var(--tl-bajo-soft);  color: var(--tl-bajo);  border-color: var(--tl-bajo-line); }
+.tl-chip.tl-sin   { background: var(--tl-sin-soft);   color: var(--tl-sin);   border-color: var(--tl-sin-line); }
+.tl-chip.tl-info  { background: var(--tl-enlace-soft);color: var(--tl-enlace);border-color: var(--tl-enlace-line); }
+a.tl-chip { text-decoration: none; }
+a.tl-chip:hover { filter: brightness(.96); }
+
+/* Los tres segmentos. Van dentro del chip y también sueltos en las tablas. */
+.tl-segs { display: inline-flex; gap: 2px; align-items: center; flex: none; }
+.tl-segs i {
+  display: block; width: 4px; height: 11px; border-radius: 1.5px;
+  background: currentColor; opacity: .22;
+}
+.tl-segs i.on { opacity: 1; }
+.tl-segs.g { gap: 3px; }
+.tl-segs.g i { width: 6px; height: 16px; border-radius: 2px; }
+
+.tl-cifra { font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.5px; }
+.tl-cifra.tl-alto  { color: var(--tl-alto); }
+.tl-cifra.tl-medio { color: var(--tl-medio); }
+.tl-cifra.tl-bajo  { color: var(--tl-bajo); }
+.tl-cifra.tl-sin   { color: var(--tl-sin); }
+
+.tl-meter { height: 6px; border-radius: 3px; background: var(--tl-surface-3); overflow: hidden; }
+.tl-meter i { display: block; height: 100%; border-radius: 3px; }
+.tl-fill-alto  { background: var(--tl-alto-fill); }
+.tl-fill-medio { background: var(--tl-medio-fill); }
+.tl-fill-bajo  { background: var(--tl-bajo-fill); }
+.tl-fill-sin   { background: var(--tl-sin-fill); }
+
+.tl-stack { display: flex; gap: 4px; height: 10px; }
+.tl-stack i { border-radius: 3px; }
+
+/* Dial de rendimiento. El arco es un SVG generado en la vista. */
+.tl-dial { position: relative; display: inline-block; }
+.tl-dial svg { transform: rotate(-90deg); }
+.tl-dial .in {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.tl-dial .v { font-weight: 800; letter-spacing: -1.6px; line-height: 1; font-variant-numeric: tabular-nums; }
+.tl-dial .v span { font-size: .55em; font-weight: 650; opacity: .5; letter-spacing: 0; }
+.tl-dial .l { font-size: .72rem; font-weight: 700; margin-top: .35rem; display: flex; align-items: center; gap: .35rem; }
+
+/* ============================================================
+   DATOS
+   ============================================================ */
+.tl-kpi .k {
+  font-size: .66rem; font-weight: 800; letter-spacing: .9px;
+  text-transform: uppercase; color: var(--tl-text-3);
+}
+.tl-kpi .v {
+  font-size: 2rem; font-weight: 800; letter-spacing: -1.2px;
+  margin-top: .3rem; font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.tl-kpi .d { font-size: .75rem; color: var(--tl-text-2); margin-top: .25rem; }
+
+.tl-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.tl-table th {
+  text-align: left; font-size: .64rem; font-weight: 800; letter-spacing: .7px;
+  text-transform: uppercase; color: var(--tl-text-3); padding: .7rem .875rem;
+  border-bottom: 1px solid var(--tl-border); background: var(--tl-surface-2); white-space: nowrap;
+}
+.tl-table td { padding: .65rem .875rem; border-bottom: 1px solid var(--tl-border); vertical-align: middle; }
+.tl-table tbody tr:last-child td { border-bottom: none; }
+.tl-table tbody tr:hover { background: var(--tl-surface-2); }
+.tl-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.tl-table a { color: inherit; text-decoration: none; }
+.tl-table a:hover { color: var(--tl-enlace); text-decoration: underline; }
+
+.tl-banner {
+  border-radius: .75rem; padding: .8rem 1rem; font-size: .84rem; line-height: 1.55;
+  display: flex; gap: .7rem; align-items: flex-start;
+}
+.tl-banner.tl-bajo  { background: var(--tl-bajo-soft);   border: 1px solid var(--tl-bajo-line);   color: var(--tl-bajo); }
+.tl-banner.tl-alto  { background: var(--tl-alto-soft);   border: 1px solid var(--tl-alto-line);   color: var(--tl-alto); }
+.tl-banner.tl-medio { background: var(--tl-medio-soft);  border: 1px solid var(--tl-medio-line);  color: var(--tl-medio); }
+.tl-banner.tl-sin   { background: var(--tl-sin-soft);    border: 1px solid var(--tl-sin-line);    color: var(--tl-sin); }
+.tl-banner.tl-info  { background: var(--tl-enlace-soft); border: 1px solid var(--tl-enlace-line); color: var(--tl-enlace); }
+.tl-banner ul { padding-left: 1.1rem; margin-bottom: 0; }
+
+/* Ayuda de pantalla plegada. Es lo que sustituye a las pilas de avisos
+   permanentes: la explicación sigue ahí, pero no ocupa media pantalla a quien
+   ya se la sabe. */
+.tl-ayuda {
+  border: 1px solid var(--tl-border); border-radius: .75rem;
+  background: var(--tl-surface); box-shadow: var(--tl-sombra-1);
+}
+.tl-ayuda > summary {
+  cursor: pointer; padding: .6rem 1rem; font-size: .82rem; font-weight: 650;
+  color: var(--tl-text-2); list-style-position: inside;
+}
+.tl-ayuda > summary:hover { color: var(--tl-text); }
+.tl-ayuda[open] > summary { border-bottom: 1px solid var(--tl-border); }
+.tl-ayuda .cuerpo { padding: .9rem 1rem .2rem; font-size: .84rem; line-height: 1.6; color: var(--tl-text-2); }
+.tl-ayuda .cuerpo p { margin-bottom: .7rem; }
+.tl-ayuda .cuerpo b { color: var(--tl-text); }
+
+/* Título de pantalla. Mismo tamaño lo pinte quien lo pinte: la cabecera
+   compartida o una vista que se monta la suya. */
+.tl-titulo { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: .25rem; }
+
+.tl-empty { text-align: center; padding: 2.75rem 1.25rem; color: var(--tl-text-2); }
+.tl-empty .em { font-size: 1.9rem; margin-bottom: .6rem; opacity: .8; }
+
+/* Tarjeta seleccionable con radio dentro (tipo de aviso, elección de alumno). */
+.tl-tipo {
+  border: 1px solid var(--tl-border); border-radius: .75rem; cursor: pointer;
+  background: var(--tl-surface); transition: border-color .15s, background .15s;
+}
+.tl-tipo:hover { border-color: var(--tl-enlace-line); background: var(--tl-surface-2); }
+.tl-tipo:has(input:checked) { border-color: var(--tl-accion); background: var(--tl-accion-soft); }
+.tl-tipo input { margin-top: .2rem; }
+
+/* ============================================================
+   GRÁFICO DE EXÁMENES FRENTE A EJERCICIOS
+   ============================================================ */
+
+/* Leyenda: el cuadradito lleva el color, el texto lleva tinta de texto. Un
+   rótulo pintado del color de su serie es ilegible y además mezcla el color
+   de identidad con el de estado. */
+.tl-leyenda { display: flex; gap: 1rem; font-size: .78rem; color: var(--tl-text-2); }
+.tl-leyenda span { display: inline-flex; align-items: center; gap: .4rem; }
+.tl-leyenda i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+
+.tl-tile { border: 1px solid var(--tl-border); border-radius: 10px; padding: .9rem 1rem; height: 100%; }
+.tl-tile-lbl { display: flex; align-items: center; gap: .45rem; font-size: .78rem; color: var(--tl-text-2); }
+.tl-tile-lbl i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; flex: none; }
+/* Cifras proporcionales, no tabulares: a este tamaño «121» con anchos iguales
+   se ve suelto. Lo tabular se reserva a las columnas que deben alinearse. */
+.tl-tile-val { font-size: 1.9rem; font-weight: 700; letter-spacing: -.5px; line-height: 1.15; margin-top: .15rem; }
+.tl-tile-val span { font-size: .9rem; font-weight: 500; color: var(--tl-text-3); }
+.tl-tile-sub { font-size: .75rem; color: var(--tl-text-3); }
+
+.tl-grafico { overflow-x: auto; }
+.tl-grafico svg { min-width: 560px; display: block; }
+
+.tl-tabla-alt > summary { cursor: pointer; font-size: .8rem; color: var(--tl-text-2); }
+.tl-tabla-alt > summary:hover { color: var(--tl-enlace); }
+
+/* Pestañas de la ficha del hijo: resumen y gráficos. */
+.tl-pestanas { display: inline-flex; gap: .25rem; background: var(--tl-surface-2); padding: .25rem; border-radius: 10px; }
+.tl-pestanas a {
+  padding: .4rem .95rem; border-radius: 7px; font-size: .84rem; font-weight: 650;
+  color: var(--tl-text-2); text-decoration: none; white-space: nowrap;
+}
+.tl-pestanas a:hover { color: var(--tl-text); }
+.tl-pestanas a.on { background: var(--tl-surface); color: var(--tl-text); box-shadow: var(--tl-sombra-1); }
+
+/* ============================================================
+   ACCESO Y VINCULACIÓN
+   ============================================================ */
+
+/* Las pantallas públicas: formulario a la izquierda, panel de marca a la
+   derecha. El panel es el único sitio donde el marino ocupa media pantalla. */
+.tl-acceso { display: grid; grid-template-columns: 1fr; min-height: 100vh; }
+@media (min-width: 992px) { .tl-acceso { grid-template-columns: 1.15fr .85fr; } }
+.tl-acceso-form { display: flex; align-items: center; justify-content: center; padding: 2rem 1.5rem; background: var(--tl-surface); }
+.tl-acceso-form > div { width: 500px; max-width: 100%; }
+.tl-acceso-marca {
+  display: none; align-items: center; justify-content: center; padding: 3rem;
+  background: var(--tl-marino); color: #fff;
+}
+[data-bs-theme="dark"] .tl-acceso-marca { background: #041A26; }
+@media (min-width: 992px) { .tl-acceso-marca { display: flex; } }
+.tl-acceso-marca .txt { max-width: 380px; }
+.tl-acceso-marca h2 { font-size: 1.75rem; font-weight: 800; line-height: 1.25; letter-spacing: -.5px; margin-bottom: .9rem; }
+.tl-acceso-marca p { color: var(--tl-cian); line-height: 1.65; margin: 0; }
+.tl-acceso-marca .tl-mark { width: 44px; height: 44px; border-radius: 13px; font-size: 1.2rem; margin-bottom: 1.75rem; }
+
+/* Código de vinculación: se lee, se dicta y se teclea, así que va en
+   monoespaciada y bien espaciado. Un código mal copiado es una llamada al centro. */
+.tl-codigo, .tl-codigo-chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .16em; text-transform: uppercase;
+}
+.tl-codigo-chip {
+  display: inline-block; padding: .35rem .8rem; border-radius: 8px; font-weight: 700;
+  background: var(--tl-accion-soft); color: var(--tl-medio);
+  border: 1px solid var(--tl-accion-line); font-size: 1.05rem;
+}
+[data-bs-theme="dark"] .tl-codigo-chip { color: var(--tl-accion); }
+.tl-codigo { font-size: 1.1rem; font-weight: 600; }
+
+/* Solicitudes de vinculación: cada una es una tarjeta, no una fila de tabla.
+   Lleva texto libre y un formulario, y eso no cabe en una celda. */
+.tl-solicitud { border: 1px solid var(--tl-border); border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+.tl-solicitud:last-of-type { margin-bottom: 0; }
+.tl-solicitud-lbl {
+  font-size: .68rem; text-transform: uppercase; letter-spacing: .6px;
+  color: var(--tl-text-3); margin-bottom: .15rem; font-weight: 700;
+}
+
+/* Separador con rótulo dentro de un formulario largo. */
+.tl-sep {
+  font-size: .7rem; text-transform: uppercase; letter-spacing: .7px; font-weight: 800;
+  color: var(--tl-text-3); border-top: 1px solid var(--tl-border);
+  padding-top: .9rem; margin-top: .4rem;
+}
+
+/* Movimiento reducido: el sistema operativo manda. */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
